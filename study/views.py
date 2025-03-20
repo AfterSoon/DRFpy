@@ -2,12 +2,18 @@ from django.shortcuts import render
 from rest_framework import generics, viewsets
 
 from study.models import Course, Lesson
-from study.serializers import CourseSerializers, LessonSerializers
+from study.serializers import (CourseDetailSerializers, CourseSerializers,
+                               LessonSerializers)
 
 
 class CourseViewSet(viewsets.ModelViewSet):
     serializer_class = CourseSerializers
     queryset = Course.objects.all()
+
+    def get_serializer(self):
+        if self.action == "retrieve":
+            return CourseDetailSerializers
+        return CourseSerializers
 
 
 class LessonCreateAPIView(generics.CreateAPIView):
