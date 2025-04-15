@@ -1,18 +1,19 @@
 [tool.poetry]
-name = "вка"
+name = "drf-courses"
 version = "0.1.0"
 description = ""
-authors = ["ttt.temaa <artem1005200776@gmail.com>"]
+authors = ["Aratimius <aratimius@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
-isort = "^6.0.0"
-black = "^25.1.0"
-psycopg2-binary = "^2.9.10"
-dotenv = "^0.9.9"
-python-dotenv = "^1.0.1"
-pillow = "^11.1.0"
+python = "^3.10"
+django = "^5.1.1"
+psycopg2-binary = "^2.9.9"
+pillow = "^10.4.0"
+djangorestframework = "^3.15.2"
+ipython = "^8.28.0"
+django-filter = "^24.3"
+djangorestframework-simplejwt = "^5.3.1"
 
 
 [build-system]

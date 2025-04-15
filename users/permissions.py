@@ -1,19 +1,16 @@
 from rest_framework import permissions
 
 
-class IsModerDRF(permissions.BasePermission):
-    """
-    Проверяет, является ли пользователь модератором.
-    """
+class IsModer(permissions.BasePermission):
+    """Проверка на модератора"""
+    message = 'Adding customers not allowed.'
 
     def has_permission(self, request, view):
-        return request.user.groups.filter(name="moderators").exists()
+        return request.user.groups.filter(name='moders').exists()
 
 
-class IsOwnerDRF(permissions.BasePermission):
-    """
-    Проверяет, является ли пользователь владельцем.
-    """
+class IsOwner(permissions.BasePermission):
+    """Проверка на владельца"""
 
     def has_object_permission(self, request, view, obj):
-        return obj.owner == request.user
+        return obj.user == request.user
