@@ -5,29 +5,29 @@ from config.settings import STRIPE_API_KEY
 stripe.api_key = STRIPE_API_KEY
 
 
-def create_stripe_product(instance):
-    title_product = (
-        f"{instance.paid_course}"
-        if instance.paid_course
-        else instance.separately_paid_lesson
-    )
-    stripe_product = stripe.Product.create(name=f"{title_product}")
-    return stripe_product.id
+def create_product(product):
+    """Создаем продукт"""
+
+    product = stripe.Product.create(name=product.title)
+    return product
 
 
-def create_stripe_price(payment, stripe_product_id):
+def create_price(amount, product):
+    """Создает цену для продукта"""
     price = stripe.Price.create(
         currency="rub",
-        unit_amount=payment.payment_amount * 100,
-        product=stripe_product_id,
+        unit_amount=amount * 100,
+        product_data={"name": product.get("name")},
     )
-    return price.id
+    return price
 
 
 def create_stripe_session(price):
+    """Создает сессию на оплату в stripe"""
+
     session = stripe.checkout.Session.create(
-        success_url="http://127.0.0.1:8000/",
-        line_items=[{"price": price, "quantity": 1}],
+        success_url="https://127.0.0.1:8000/users/payments/",
+        line_items=[{"price": price.get("id"), "quantity": 1}],
         mode="payment",
     )
-    return session.id, session.url
+    return session.get("id"), session.get("url")
